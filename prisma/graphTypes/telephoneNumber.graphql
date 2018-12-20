@@ -1,0 +1,6 @@
+type TelephoneNumber {
+  id: ID! @unique
+  type: String!
+  telephone: String!
+  owner: User! @relation(name: "TelephoneNumberToUser", onDelete: SET_NULL)
+}

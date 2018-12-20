@@ -1,0 +1,5 @@
+type TimeZone {
+  id: ID! @unique
+  offset: String
+  description: String
+}

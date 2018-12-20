@@ -1,0 +1,28 @@
+# import {User, CoordinateWhereInput, TimeZoneWhereInput, CompanyWhereInput, SettingsWhereInput, AddressCreateWithoutOwnerInput, AddressWhereUniqueInput, ImageCreateWithoutOwnerInput, ImageWhereUniqueInput, TelephoneNumberCreateWithoutOwnerInput, TelephoneNumberWhereUniqueInput, TenantCreateWithoutUsersInput, TenantWhereUniqueInput, PostCreateWithoutAuthorInput, PostWhereUniqueInput, PostCreateWithoutLikedByInput, CommentCreateWithoutAuthorInput, CommentWhereUniqueInput, AddressUpdateWithWhereUniqueWithoutOwnerInput, AddressUpsertWithWhereUniqueWithoutOwnerInput, AddressScalarWhereInput, AddressUpdateManyWithWhereNestedInput, ImageUpdateWithWhereUniqueWithoutOwnerInput, ImageUpsertWithWhereUniqueWithoutOwnerInput, ImageScalarWhereInput, ImageUpdateManyWithWhereNestedInput, TelephoneNumberUpdateWithWhereUniqueWithoutOwnerInput, TelephoneNumberUpsertWithWhereUniqueWithoutOwnerInput, TelephoneNumberScalarWhereInput, TelephoneNumberUpdateManyWithWhereNestedInput, TenantUpdateWithWhereUniqueWithoutUsersInput, TenantUpsertWithWhereUniqueWithoutUsersInput, TenantScalarWhereInput, TenantUpdateManyWithWhereNestedInput, PostUpdateWithWhereUniqueWithoutAuthorInput, PostUpsertWithWhereUniqueWithoutAuthorInput, PostScalarWhereInput, PostUpdateManyWithWhereNestedInput, PostUpdateWithWhereUniqueWithoutLikedByInput, PostUpsertWithWhereUniqueWithoutLikedByInput, CommentUpdateWithWhereUniqueWithoutAuthorInput, CommentUpsertWithWhereUniqueWithoutAuthorInput, CommentScalarWhereInput, CommentUpdateManyWithWhereNestedInput} from './generated/prisma.graphql'
+
+scalar DateTime
+
+type Query {
+  me: UserResponse!
+  feed: [Post!]!
+  filterPosts(searchString: String): [Post!]!
+  post(id: ID!): Post
+}
+
+type Mutation {
+  login(email: String!, password: String!): UserResponse!
+  register(data: UserCreateInput!): UserResponse!
+  updateUser(data: UserUpdateInput!): UserResponse!
+
+  createDraft(title: String!, content: String): Post!
+  deletePost(id: ID!): Post
+  publish(id: ID!): Post
+}
+
+type UserResponse {
+  code: String!
+  message: String!
+  success: Boolean!
+  token: String
+  user: User
+}

@@ -1,0 +1,112 @@
+scalar DateTime
+scalar Json
+
+type User {
+  id: ID! @unique
+  isActive: Boolean! @default(value: "true")
+  email: String! @unique
+  emailVerified: Boolean! @default(value: "false")
+  password: String!
+  firstName: String
+  lastName: String
+  addresses: [Address!]! @relation(name: "AddressToUser", onDelete: CASCADE)
+  images: [Image!]! @relation(name: "ImageToUser", onDelete: CASCADE)
+  dob: DateTime
+  gender: Genders
+  telephoneNumbers: [TelephoneNumber!]! @relation(name: "TelephoneNumberToUser", onDelete: CASCADE)
+  userData: Json @default(value: "null")
+  tenants: [Tenant!]! @relation(name: "TenantToUser")
+  posts: [Post!]! @relation(name: "PostToUser", onDelete: CASCADE)
+  likedPosts: [Post!]! @relation(name: "LikedPostToUser", onDelete: CASCADE)
+
+  comments: [Comment!]! @relation(name: "CommentToUser", onDelete: CASCADE)
+
+  createdAt: DateTime!
+  lastLoginAt: DateTime
+  updatedAt: DateTime!
+
+  token: String
+}
+
+type Image {
+  id: ID! @unique
+  url: String!
+  name: String
+  description: String
+  alt: String
+  owner: User! @relation(name: "ImageToUser", onDelete: SET_NULL)
+}
+
+type Tenant {
+  id: ID! @unique
+  isActive: Boolean! @default(value: "true")
+  domain: String! @unique
+  apiKey: String
+  users: [User!]! @relation(name: "TenantToUser")
+  company: Company!
+  parent: Tenant
+  settings: Settings
+}
+
+type TenantUserRole {
+  tenant: Tenant!
+  user: User!
+  role: [Roles!]!
+}
+
+type Settings {
+  id: ID! @unique
+  tenant: Tenant @unique
+  data: Json
+}
+
+type Address {
+  id: ID! @unique
+  type: AddressTypes!
+  street: String!
+  suite: String
+  city: String!
+  provinceState: String!
+  postalcode: String!
+  coordinate: Coordinate @relation(name: "CoordinateToAddress", onDelete: CASCADE)
+  timezone: TimeZone @relation(name: "TimezoneToAddress", onDelete: CASCADE)
+  owner: User! @relation(name: "AddressToUser", onDelete: SET_NULL)
+}
+
+type Post {
+  id: ID! @unique
+  title: String!
+  content: String
+  published: Boolean! @default(value: "false")
+  author: User! @relation(name: "PostToUser", onDelete: SET_NULL)
+  likedBy: [User!]! @relation(name: "LikedPostToUser", onDelete: SET_NULL)
+  comments: [Comment!]! @relation(name: "CommentToPost", onDelete: CASCADE)
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Comment {
+  id: ID! @unique
+  content: String
+  post: Post! @relation(name: "CommentToPost", onDelete: SET_NULL)
+  author: User! @relation(name: "CommentToUser", onDelete: SET_NULL)
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Role {
+  id: ID! @unique
+  roleName: Roles! @Unique
+  permissions: [Permission!]! @relation(name: "PermissionToUser")
+}
+
+type Permission {
+  id: ID! @unique
+  permissionName: Permissions! @Unique
+  roles: [Role!]! @relation(name: "PermissionToUser")
+}
+
+type Product {
+  id: ID! @unique
+  name: String!
+}

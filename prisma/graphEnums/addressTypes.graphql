@@ -1,0 +1,7 @@
+enum AddressTypes {
+  BILLING
+  BUSINESS
+  DELIVERY
+  HOME
+  VENDOR
+}

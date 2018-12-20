@@ -1,0 +1,9 @@
+type Company {
+  id: ID! @unique
+  name: String!
+  address: Address!
+  contactNumber: TelephoneNumber!
+  contactEmail: String!
+  domain: String!
+  contactPerson: String
+}

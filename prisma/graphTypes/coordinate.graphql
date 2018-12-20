@@ -1,0 +1,5 @@
+type Coordinate {
+  id: ID! @unique
+  latitude: String!
+  longitude: String!
+}
