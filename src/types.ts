@@ -12,3 +12,17 @@ export interface UserResponse {
   token: string | null;
   user: User | null;
 }
+
+export interface Post {
+  id: string;
+  title: string;
+  content: string;
+  published: boolean;
+  authorId: string;
+}
+
+export interface Data {
+  posts: Post[];
+  users: User[];
+  idProvider: () => string;
+}
